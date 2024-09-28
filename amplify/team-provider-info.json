@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-quickerstops-dev-46e49-authRole",
+      "UnauthRoleArn": "arn:aws:iam::741448938606:role/amplify-quickerstops-dev-46e49-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::741448938606:role/amplify-quickerstops-dev-46e49-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-quickerstops-dev-46e49-deployment",
+      "UnauthRoleName": "amplify-quickerstops-dev-46e49-unauthRole",
+      "StackName": "amplify-quickerstops-dev-46e49",
+      "StackId": "arn:aws:cloudformation:us-east-1:741448938606:stack/amplify-quickerstops-dev-46e49/64f78910-7dc8-11ef-8913-0afffc72fe3f",
+      "AmplifyAppId": "d2gaqey9lpoek5"
+    }
+  }
+}
