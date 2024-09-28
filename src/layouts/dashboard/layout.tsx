@@ -53,10 +53,10 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
           slotProps={{
             container: {
               maxWidth: false,
-              sx: { px: { [layoutQuery]: 5 }, width: '80%', backgroundColor: '#040047 !important' },
+              sx: { px: { [layoutQuery]: 5 }, width: '80%', backgroundColor: '#010014 !important' },
             },
           }}
-          sx={{ backgroundColor: '#040047 !important' }}
+          sx={{ backgroundColor: '#010014 !important' }}
           slots={{
             topArea: (
               <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
@@ -82,10 +82,10 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Button variant="outlined" sx={{ borderColor: '#fff' }}>
+                <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff', mr: 3 }}>
                   Create Account
                 </Button>
-                <Button variant="outlined" sx={{ borderColor: '#fff' }}>
+                <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff' }}>
                   Log In
                 </Button>
                 {loggedIn && (
@@ -143,6 +143,7 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
           },
         },
         ...sx,
+        backgroundColor: '#d9d9d9',
       }}
     >
       <Main>{children}</Main>
