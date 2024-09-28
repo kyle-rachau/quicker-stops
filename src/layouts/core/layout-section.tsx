@@ -1,11 +1,11 @@
-import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
+import type { CSSObject, SxProps, Theme } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { useTheme } from '@mui/material/styles';
 
-import { baseVars } from '../config-vars';
 import { layoutClasses } from '../classes';
+import { baseVars } from '../config-vars';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +40,8 @@ export function LayoutSection({
       }}
     />
   );
+
+  console.log(loggedIn);
 
   return (
     <>

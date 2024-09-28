@@ -1,28 +1,26 @@
-import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
+import type { Breakpoint, SxProps, Theme } from '@mui/material/styles';
 
 import { useState } from 'react';
 
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
-import { _langs, _notifications } from 'src/_mock';
+import { _notifications } from 'src/_mock';
 
-import { Iconify } from 'src/components/iconify';
 import { Button } from '@mui/material';
+import { Iconify } from 'src/components/iconify';
 
-import { Main } from './main';
+import logo from '../../assets/logo.png';
 import { layoutClasses } from '../classes';
-import { NavMobile, NavDesktop } from './nav';
-import { navData } from '../config-nav-dashboard';
-import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../config-nav-workspace';
-import { MenuButton } from '../components/menu-button';
-import { LayoutSection } from '../core/layout-section';
-import { HeaderSection } from '../core/header-section';
 import { AccountPopover } from '../components/account-popover';
-import { LanguagePopover } from '../components/language-popover';
 import { NotificationsPopover } from '../components/notifications-popover';
+import { navData } from '../config-nav-dashboard';
+import { _workspaces } from '../config-nav-workspace';
+import { HeaderSection } from '../core/header-section';
+import { LayoutSection } from '../core/layout-section';
+import { Main } from './main';
+import { NavDesktop } from './nav';
 
 // ----------------------------------------------------------------------
 
@@ -47,13 +45,18 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
       /** **************************************
        * Header
        *************************************** */
+      loggedIn={loggedIn}
       headerSection={
         <HeaderSection
           layoutQuery={layoutQuery}
           slotProps={{
             container: {
               maxWidth: false,
-              sx: { px: { [layoutQuery]: 5 }, width: '80%', backgroundColor: '#010014 !important' },
+              sx: {
+                px: { [layoutQuery]: 5 },
+                width: loggedIn ? '100%' : '80%',
+                backgroundColor: '#010014 !important',
+              },
             },
           }}
           sx={{ backgroundColor: '#010014 !important' }}
@@ -65,32 +68,36 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
             ),
             leftArea: (
               <>
-                <MenuButton
-                  onClick={() => setNavOpen(true)}
-                  sx={{
-                    ml: -1,
-                    [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
-                  }}
-                />
-                <NavMobile
-                  data={navData}
-                  open={navOpen}
-                  onClose={() => setNavOpen(false)}
-                  workspaces={_workspaces}
-                />
+                {!loggedIn && (
+                  <img
+                    src={logo}
+                    alt="logo"
+                    style={{
+                      width: 125,
+                      height: 125,
+                      position: 'absolute',
+                      zIndex: '999',
+                      paddingTop: '7px',
+                    }}
+                  />
+                )}
               </>
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff', mr: 3 }}>
-                  Create Account
-                </Button>
-                <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff' }}>
-                  Log In
-                </Button>
+                {!loggedIn && (
+                  <>
+                    <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff', mr: 3 }}>
+                      Create Account
+                    </Button>
+                    <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff' }}>
+                      Log In
+                    </Button>
+                  </>
+                )}
                 {loggedIn && (
                   <>
-                    <NotificationsPopover data={_notifications} />
+                    <NotificationsPopover data={_notifications} sx={{ mr: 3 }} />
                     <AccountPopover
                       data={[
                         {

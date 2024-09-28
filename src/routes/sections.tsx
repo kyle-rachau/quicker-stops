@@ -1,13 +1,13 @@
-import { lazy, Suspense } from 'react';
-import { Outlet, Navigate, useRoutes } from 'react-router-dom';
+import { lazy, Suspense, useState } from 'react';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-import { varAlpha } from 'src/theme/styles';
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
 import MarketingPage from 'src/pages/marketing';
+import { varAlpha } from 'src/theme/styles';
 
 // ----------------------------------------------------------------------
 
@@ -34,17 +34,19 @@ const renderFallback = (
 );
 
 export function Router() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return useRoutes([
     {
       element: (
-        <DashboardLayout loggedIn={false}>
+        <DashboardLayout loggedIn={isLoggedIn}>
           <Suspense fallback={renderFallback}>
             <Outlet />
           </Suspense>
         </DashboardLayout>
       ),
       children: [
-        { element: <MarketingPage />, index: true },
+        { element: isLoggedIn ? <HomePage /> : <MarketingPage />, index: true },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
