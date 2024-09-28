@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import { _langs, _notifications } from 'src/_mock';
 
 import { Iconify } from 'src/components/iconify';
+import { Button } from '@mui/material';
 
 import { Main } from './main';
 import { layoutClasses } from '../classes';
@@ -31,9 +32,10 @@ export type DashboardLayoutProps = {
   header?: {
     sx?: SxProps<Theme>;
   };
+  loggedIn: boolean;
 };
 
-export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) {
+export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLayoutProps) {
   const theme = useTheme();
 
   const [navOpen, setNavOpen] = useState(false);
@@ -51,10 +53,10 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
           slotProps={{
             container: {
               maxWidth: false,
-              sx: { px: { [layoutQuery]: 5 } },
+              sx: { px: { [layoutQuery]: 5 }, width: '80%', backgroundColor: '#040047 !important' },
             },
           }}
-          sx={header?.sx}
+          sx={{ backgroundColor: '#040047 !important' }}
           slots={{
             topArea: (
               <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
@@ -80,28 +82,36 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
-                <Searchbar />
-                <LanguagePopover data={_langs} />
-                <NotificationsPopover data={_notifications} />
-                <AccountPopover
-                  data={[
-                    {
-                      label: 'Home',
-                      href: '/',
-                      icon: <Iconify width={22} icon="solar:home-angle-bold-duotone" />,
-                    },
-                    {
-                      label: 'Profile',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
-                    },
-                    {
-                      label: 'Settings',
-                      href: '#',
-                      icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
-                    },
-                  ]}
-                />
+                <Button variant="outlined" sx={{ borderColor: '#fff' }}>
+                  Create Account
+                </Button>
+                <Button variant="outlined" sx={{ borderColor: '#fff' }}>
+                  Log In
+                </Button>
+                {loggedIn && (
+                  <>
+                    <NotificationsPopover data={_notifications} />
+                    <AccountPopover
+                      data={[
+                        {
+                          label: 'Home',
+                          href: '/',
+                          icon: <Iconify width={22} icon="solar:home-angle-bold-duotone" />,
+                        },
+                        {
+                          label: 'Profile',
+                          href: '#',
+                          icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
+                        },
+                        {
+                          label: 'Settings',
+                          href: '#',
+                          icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
+                        },
+                      ]}
+                    />
+                  </>
+                )}
               </Box>
             ),
           }}
@@ -129,7 +139,7 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
       sx={{
         [`& .${layoutClasses.hasSidebar}`]: {
           [theme.breakpoints.up(layoutQuery)]: {
-            pl: 'var(--layout-nav-vertical-width)',
+            pl: loggedIn ? 'var(--layout-nav-vertical-width)' : '0',
           },
         },
         ...sx,

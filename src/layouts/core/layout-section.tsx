@@ -16,6 +16,7 @@ export type LayoutSectionProps = {
   footerSection?: React.ReactNode;
   headerSection?: React.ReactNode;
   sidebarSection?: React.ReactNode;
+  loggedIn?: boolean;
 };
 
 export function LayoutSection({
@@ -25,6 +26,7 @@ export function LayoutSection({
   footerSection,
   headerSection,
   sidebarSection,
+  loggedIn,
 }: LayoutSectionProps) {
   const theme = useTheme();
 
@@ -44,7 +46,7 @@ export function LayoutSection({
       {inputGlobalStyles}
 
       <Box id="root__layout" className={layoutClasses.root} sx={sx}>
-        {sidebarSection}
+        {loggedIn ? sidebarSection : <></>}
         <Box
           display="flex"
           flex="1 1 auto"
