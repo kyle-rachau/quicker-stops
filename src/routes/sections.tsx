@@ -34,7 +34,7 @@ const renderFallback = (
 );
 
 export function Router() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return useRoutes([
     {
