@@ -35,16 +35,26 @@ import { Main } from './main';
 import { NavDesktop } from './nav';
 
 // ----------------------------------------------------------------------
+const resConfig = {
+  endpoint: 'https://6nfie7awye.execute-api.us-east-1.amazonaws.com/dev',
+};
+
+const apiConfig: ResourcesConfig['API'] = {
+  REST: {
+    'quicker-stops': resConfig,
+  },
+};
 
 const authConfig: ResourcesConfig['Auth'] = {
   Cognito: {
-    userPoolId: 'us-east-1_F6QolKj3U',
-    userPoolClientId: '4ql237qoclv0u1gknkmp6pmmqv',
+    userPoolId: 'us-east-1_l6oAV7m6b',
+    userPoolClientId: '54m3fkpimt2lcr1ftf3d7jujp6',
   },
 };
 
 Amplify.configure({
   Auth: authConfig,
+  API: apiConfig,
 });
 
 export type DashboardLayoutProps = {
@@ -82,13 +92,12 @@ export function DashboardLayout({
   async function handleSignIn({ username, password }: SignInInput) {
     try {
       const { isSignedIn, nextStep } = await signIn({ username, password });
+      console.log(isSignedIn);
       if (isSignedIn) {
         updateLoggedIn(isSignedIn);
         setLoginOpen(false);
       }
 
-      if (nextStep.signInStep === 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED') {
-      }
       console.log(nextStep);
     } catch (error) {
       console.log('error signing in', error);
@@ -102,8 +111,8 @@ export function DashboardLayout({
         password,
       });
 
-      const result = await createUser({
-        cognitoId: userId,
+      await createUser({
+        cognito_id: username,
         first_name: first_name,
         last_name: last_name,
       });
@@ -126,6 +135,10 @@ export function DashboardLayout({
         username,
         confirmationCode,
       });
+
+      if (isSignUpComplete) {
+        setConfirmSignUpOpen(false);
+      }
     } catch (error) {
       console.log('error confirming sign up', error);
     }

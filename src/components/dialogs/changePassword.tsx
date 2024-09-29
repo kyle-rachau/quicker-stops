@@ -48,8 +48,6 @@ export default function ChangePassword({ open, handleCancel, handleSubmit }: Log
     event.preventDefault();
   };
 
-  let properties = ['newPassword'];
-
   const handleClose = (update: any) => {
     if (update) {
       const nld = {

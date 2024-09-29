@@ -39,7 +39,7 @@ export function Router() {
   return useRoutes([
     {
       element: (
-        <DashboardLayout loggedIn={isLoggedIn} updateLoggedIn={(e: any) => setIsLoggedIn(e)}>
+        <DashboardLayout loggedIn={isLoggedIn} updateLoggedIn={() => setIsLoggedIn(true)}>
           <Suspense fallback={renderFallback}>
             <Outlet />
           </Suspense>
