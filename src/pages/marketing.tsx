@@ -1,9 +1,6 @@
 import { Box, Button, Card, CardContent, Grid, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 
-import { CONFIG } from 'src/config-global';
-
-import { OverviewAnalyticsView } from 'src/sections/overview/view';
 import copImg from '../assets/background-image.jpg';
 // ----------------------------------------------------------------------
 
@@ -62,7 +59,7 @@ export default function MarketingPage() {
           </Stack>
         </Box>
       </Box>
-      <Box sx={{ width: '80%', alignSelf: 'center', pt: 8 }}>
+      <Box sx={{ width: '70%', alignSelf: 'center', pt: 8 }}>
         <Stack direction="row">
           <Stack direction="column" sx={{ width: '50%' }}>
             <Typography fontFamily="sans-serif">How does it work?</Typography>
@@ -76,7 +73,7 @@ export default function MarketingPage() {
             foster trust.
           </Typography>
         </Stack>
-        <Box sx={{ mt: 4, pr: 10, pl: 10 }}>
+        <Box sx={{ mt: 4 }}>
           <Grid container spacing={4}>
             {cardData.map((data) => (
               <Grid item xs={4}>

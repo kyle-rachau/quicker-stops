@@ -11,6 +11,18 @@ import { _notifications } from 'src/_mock';
 import { Button } from '@mui/material';
 import { Iconify } from 'src/components/iconify';
 
+import { Amplify, type ResourcesConfig } from 'aws-amplify';
+import {
+  confirmSignUp,
+  signIn,
+  signUp,
+  type ConfirmSignUpInput,
+  type SignInInput,
+} from 'aws-amplify/auth';
+import { createUser } from 'src/api/users';
+import ConfirmSignupDialog from 'src/components/dialogs/confirmSignup';
+import CreateAccountDialog from 'src/components/dialogs/createAccount';
+import LoginDialog from 'src/components/dialogs/login';
 import logo from '../../assets/logo.png';
 import { layoutClasses } from '../classes';
 import { AccountPopover } from '../components/account-popover';
@@ -24,6 +36,17 @@ import { NavDesktop } from './nav';
 
 // ----------------------------------------------------------------------
 
+const authConfig: ResourcesConfig['Auth'] = {
+  Cognito: {
+    userPoolId: 'us-east-1_F6QolKj3U',
+    userPoolClientId: '4ql237qoclv0u1gknkmp6pmmqv',
+  },
+};
+
+Amplify.configure({
+  Auth: authConfig,
+});
+
 export type DashboardLayoutProps = {
   sx?: SxProps<Theme>;
   children: React.ReactNode;
@@ -31,14 +54,82 @@ export type DashboardLayoutProps = {
     sx?: SxProps<Theme>;
   };
   loggedIn: boolean;
+  updateLoggedIn: any;
 };
 
-export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLayoutProps) {
-  const theme = useTheme();
+type SignUpParameters = {
+  username: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+};
 
-  const [navOpen, setNavOpen] = useState(false);
+export function DashboardLayout({
+  sx,
+  children,
+  header,
+  loggedIn,
+  updateLoggedIn,
+}: DashboardLayoutProps) {
+  const theme = useTheme();
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [createAccountOpen, setCreateAccountOpen] = useState(false);
+  const [confirmSignUpOpen, setConfirmSignUpOpen] = useState(false);
+  const [cognitoId, setCognitoId] = useState('');
 
   const layoutQuery: Breakpoint = 'lg';
+
+  async function handleSignIn({ username, password }: SignInInput) {
+    try {
+      const { isSignedIn, nextStep } = await signIn({ username, password });
+      if (isSignedIn) {
+        updateLoggedIn(isSignedIn);
+        setLoginOpen(false);
+      }
+
+      if (nextStep.signInStep === 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED') {
+      }
+      console.log(nextStep);
+    } catch (error) {
+      console.log('error signing in', error);
+    }
+  }
+
+  async function handleSignUp({ username, password, first_name, last_name }: SignUpParameters) {
+    try {
+      const { isSignUpComplete, userId, nextStep } = await signUp({
+        username,
+        password,
+      });
+
+      const result = await createUser({
+        cognitoId: userId,
+        first_name: first_name,
+        last_name: last_name,
+      });
+
+      if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {
+        setCreateAccountOpen(false);
+        setConfirmSignUpOpen(true);
+      }
+      if (userId !== undefined) {
+        setCognitoId(userId);
+      }
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
+  }
+
+  async function handleSignUpConfirmation({ username, confirmationCode }: ConfirmSignUpInput) {
+    try {
+      const { isSignUpComplete, nextStep } = await confirmSignUp({
+        username,
+        confirmationCode,
+      });
+    } catch (error) {
+      console.log('error confirming sign up', error);
+    }
+  }
 
   return (
     <LayoutSection
@@ -87,10 +178,18 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
               <Box gap={1} display="flex" alignItems="center">
                 {!loggedIn && (
                   <>
-                    <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff', mr: 3 }}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setCreateAccountOpen(true)}
+                      sx={{ borderColor: '#fff', color: '#fff', mr: 3 }}
+                    >
                       Create Account
                     </Button>
-                    <Button variant="outlined" sx={{ borderColor: '#fff', color: '#fff' }}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => setLoginOpen(true)}
+                      sx={{ borderColor: '#fff', color: '#fff' }}
+                    >
                       Log In
                     </Button>
                   </>
@@ -154,6 +253,22 @@ export function DashboardLayout({ sx, children, header, loggedIn }: DashboardLay
       }}
     >
       <Main>{children}</Main>
+      <LoginDialog
+        open={loginOpen}
+        handleCancel={() => setLoginOpen(false)}
+        handleSubmit={handleSignIn}
+      />
+      <CreateAccountDialog
+        open={createAccountOpen}
+        handleCancel={() => setCreateAccountOpen(false)}
+        handleSubmit={handleSignUp}
+      />
+      <ConfirmSignupDialog
+        open={confirmSignUpOpen}
+        handleCancel={() => setConfirmSignUpOpen(false)}
+        handleSubmit={handleSignUpConfirmation}
+        cognitoId={cognitoId}
+      />
     </LayoutSection>
   );
 }
