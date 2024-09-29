@@ -10,6 +10,14 @@
       "StackName": "amplify-quickerstops-dev-46e49",
       "StackId": "arn:aws:cloudformation:us-east-1:741448938606:stack/amplify-quickerstops-dev-46e49/64f78910-7dc8-11ef-8913-0afffc72fe3f",
       "AmplifyAppId": "d2gaqey9lpoek5"
+    },
+    "categories": {
+      "auth": {
+        "quickerstopse76a8f61": {}
+      },
+      "storage": {
+        "quickerstops": {}
+      }
     }
   }
 }

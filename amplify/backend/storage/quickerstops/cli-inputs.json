@@ -1,0 +1,13 @@
+{
+  "resourceName": "quickerstops",
+  "policyUUID": "5d98b5d7",
+  "bucketName": "quickerstopsbucket",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
