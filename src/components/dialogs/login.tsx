@@ -82,6 +82,7 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
     } else {
       if (!deleteField) {
         array.push(label);
+      } else {
       }
     }
     return array;
@@ -110,7 +111,7 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
     let isValid = true;
     let temp = { ...loginData };
     let tempReq = [...reqFields];
-    for (let p of reqProps) {
+    for (const p of reqProps) {
       if (!Object.hasOwn(loginData, p)) {
         isValid = false;
         temp = {
@@ -143,33 +144,31 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
               </Typography>
 
               <Grid container spacing={2}>
-                {reqFields.map((field) => {
-                  return (
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ paddingLeft: '0px !important', paddingTop: '0px !important' }}
-                    >
-                      <Stack direction={'row'} sx={{ marginLeft: '3rem' }}>
-                        <IconButton
-                          aria-label="weather"
-                          size="large"
-                          sx={{
-                            color: '#d32f2f',
-                            float: 'right',
-                            marginRight: '5px',
-                            padding: 0,
-                          }}
-                        >
-                          <ClearIcon />
-                        </IconButton>
-                        <Typography align="center" sx={{ padding: 0, color: '#6d7073' }}>
-                          {field}
-                        </Typography>
-                      </Stack>
-                    </Grid>
-                  );
-                })}
+                {reqFields.map((field) => (
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ paddingLeft: '0px !important', paddingTop: '0px !important' }}
+                  >
+                    <Stack direction="row" sx={{ marginLeft: '3rem' }}>
+                      <IconButton
+                        aria-label="weather"
+                        size="large"
+                        sx={{
+                          color: '#d32f2f',
+                          float: 'right',
+                          marginRight: '5px',
+                          padding: 0,
+                        }}
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                      <Typography align="center" sx={{ padding: 0, color: '#6d7073' }}>
+                        {field}
+                      </Typography>
+                    </Stack>
+                  </Grid>
+                ))}
               </Grid>
             </Paper>
           )}

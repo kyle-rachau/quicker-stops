@@ -74,6 +74,12 @@ type SignUpParameters = {
   last_name: string;
 };
 
+type userCreate = {
+  cognito_id: string;
+  first_name: string;
+  last_name: string;
+};
+
 export function DashboardLayout({
   sx,
   children,
@@ -111,11 +117,13 @@ export function DashboardLayout({
         password,
       });
 
-      await createUser({
+      const object: userCreate = {
         cognito_id: username,
         first_name: first_name,
         last_name: last_name,
-      });
+      };
+
+      await createUser(object);
 
       if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {
         setCreateAccountOpen(false);
@@ -269,17 +277,17 @@ export function DashboardLayout({
       <LoginDialog
         open={loginOpen}
         handleCancel={() => setLoginOpen(false)}
-        handleSubmit={handleSignIn}
+        handleSubmit={(e: any) => handleSignIn(e)}
       />
       <CreateAccountDialog
         open={createAccountOpen}
         handleCancel={() => setCreateAccountOpen(false)}
-        handleSubmit={handleSignUp}
+        handleSubmit={(e: any) => handleSignUp(e)}
       />
       <ConfirmSignupDialog
         open={confirmSignUpOpen}
         handleCancel={() => setConfirmSignUpOpen(false)}
-        handleSubmit={handleSignUpConfirmation}
+        handleSubmit={(e: any) => handleSignUpConfirmation(e)}
         cognitoId={cognitoId}
       />
     </LayoutSection>

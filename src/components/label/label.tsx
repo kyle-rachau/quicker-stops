@@ -3,8 +3,8 @@ import { forwardRef } from 'react';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
-import { StyledLabel } from './styles';
 import { labelClasses } from './classes';
+import { StyledLabel } from './styles';
 
 import type { LabelProps } from './types';
 
@@ -32,7 +32,6 @@ export const Label = forwardRef<HTMLSpanElement, LabelProps>(
         ref={ref}
         component="span"
         className={labelClasses.root.concat(className ? ` ${className}` : '')}
-        ownerState={{ color, variant }}
         sx={{ ...(startIcon && { pl: 0.75 }), ...(endIcon && { pr: 0.75 }), ...sx }}
         theme={theme}
         {...other}

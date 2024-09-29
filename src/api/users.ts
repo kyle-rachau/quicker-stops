@@ -1,5 +1,5 @@
 import { Amplify, type ResourcesConfig } from 'aws-amplify';
-//import amplifyconfig from './src/amplifyconfiguration.json';
+// import amplifyconfig from './src/amplifyconfiguration.json';
 import { post } from 'aws-amplify/api';
 
 const resConfig = {
