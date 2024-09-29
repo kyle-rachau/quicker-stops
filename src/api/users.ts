@@ -16,7 +16,7 @@ Amplify.configure({
   API: apiConfig,
 });
 
-export async function createUser(body: any) {
+export async function createUser(body: any): Promise<any> {
   try {
     const restOperation = post({
       apiName: 'quicker-stops',
@@ -32,5 +32,6 @@ export async function createUser(body: any) {
     return json;
   } catch (e) {
     console.log(e);
+    return {};
   }
 }

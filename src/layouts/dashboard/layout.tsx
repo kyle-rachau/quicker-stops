@@ -119,8 +119,8 @@ export function DashboardLayout({
 
       const object: userCreate = {
         cognito_id: username,
-        first_name: first_name,
-        last_name: last_name,
+        first_name,
+        last_name,
       };
 
       await createUser(object);

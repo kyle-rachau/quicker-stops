@@ -70,14 +70,10 @@ export default function ConfirmSignupDialog({
 
     // we need to add it because it's missing
     const arrayIndex = array.indexOf(label);
-    if (arrayIndex !== -1) {
-      if (deleteField) {
-        array.splice(arrayIndex, 1);
-      }
-    } else {
-      if (!deleteField) {
-        array.push(label);
-      }
+    if (arrayIndex !== -1 && deleteField) {
+      array.splice(arrayIndex, 1);
+    } else if (!deleteField && arrayIndex === -1) {
+      array.push(label);
     }
     return array;
   }
@@ -105,7 +101,7 @@ export default function ConfirmSignupDialog({
     let isValid = true;
     let temp = { ...loginData };
     let tempReq = [...reqFields];
-    for (let p of reqProps) {
+    reqProps.forEach((p) => {
       if (!Object.hasOwn(loginData, p)) {
         isValid = false;
         temp = {
@@ -114,7 +110,7 @@ export default function ConfirmSignupDialog({
         };
         tempReq = handleMissingFields(tempReq, p, false);
       }
-    }
+    });
     if (isValid) {
       setReqFields([]);
       handleClose(true);
@@ -138,33 +134,31 @@ export default function ConfirmSignupDialog({
               </Typography>
 
               <Grid container spacing={2}>
-                {reqFields.map((field) => {
-                  return (
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ paddingLeft: '0px !important', paddingTop: '0px !important' }}
-                    >
-                      <Stack direction={'row'} sx={{ marginLeft: '3rem' }}>
-                        <IconButton
-                          aria-label="weather"
-                          size="large"
-                          sx={{
-                            color: '#d32f2f',
-                            float: 'right',
-                            marginRight: '5px',
-                            padding: 0,
-                          }}
-                        >
-                          <ClearIcon />
-                        </IconButton>
-                        <Typography align="center" sx={{ padding: 0, color: '#6d7073' }}>
-                          {field}
-                        </Typography>
-                      </Stack>
-                    </Grid>
-                  );
-                })}
+                {reqFields.map((field) => (
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ paddingLeft: '0px !important', paddingTop: '0px !important' }}
+                  >
+                    <Stack direction="row" sx={{ marginLeft: '3rem' }}>
+                      <IconButton
+                        aria-label="weather"
+                        size="large"
+                        sx={{
+                          color: '#d32f2f',
+                          float: 'right',
+                          marginRight: '5px',
+                          padding: 0,
+                        }}
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                      <Typography align="center" sx={{ padding: 0, color: '#6d7073' }}>
+                        {field}
+                      </Typography>
+                    </Stack>
+                  </Grid>
+                ))}
               </Grid>
             </Paper>
           )}

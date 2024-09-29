@@ -75,15 +75,11 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
 
     // we need to add it because it's missing
     const arrayIndex = array.indexOf(label);
-    if (arrayIndex !== -1) {
-      if (deleteField) {
-        array.splice(arrayIndex, 1);
-      }
-    } else {
-      if (!deleteField) {
-        array.push(label);
-      } else {
-      }
+
+    if (arrayIndex !== -1 && deleteField) {
+      array.splice(arrayIndex, 1);
+    } else if (!deleteField && arrayIndex === -1) {
+      array.push(label);
     }
     return array;
   }
@@ -111,7 +107,7 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
     let isValid = true;
     let temp = { ...loginData };
     let tempReq = [...reqFields];
-    for (const p of reqProps) {
+    reqProps.forEach((p) => {
       if (!Object.hasOwn(loginData, p)) {
         isValid = false;
         temp = {
@@ -120,7 +116,8 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
         };
         tempReq = handleMissingFields(tempReq, p, false);
       }
-    }
+    });
+
     if (isValid) {
       setReqFields([]);
       handleClose(true);
