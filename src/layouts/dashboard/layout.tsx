@@ -178,23 +178,7 @@ export function DashboardLayout({
                 This is an info Alert.
               </Alert>
             ),
-            leftArea: (
-              <>
-                {!loggedIn && (
-                  <img
-                    src={logo}
-                    alt="logo"
-                    style={{
-                      width: 125,
-                      height: 125,
-                      position: 'absolute',
-                      zIndex: '999',
-                      paddingTop: '7px',
-                    }}
-                  />
-                )}
-              </>
-            ),
+
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
                 {!loggedIn && (

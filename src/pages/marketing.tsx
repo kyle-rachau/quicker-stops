@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardContent, Grid, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-
+import logo from '../assets/logo.png';
 import copImg from '../assets/background-image.jpg';
 // ----------------------------------------------------------------------
 
@@ -41,42 +41,62 @@ export default function MarketingPage() {
           justifyContent: 'center',
         }}
       >
-        <Box sx={{ width: '80%', alignContent: 'flex-end', p: 4 }}>
-          <Stack direction="column" sx={{ width: '30%' }} spacing={3}>
-            <Typography sx={{ color: '#FFF' }} variant="h3" fontFamily="sans-serif">
-              <b>Quicker Stops</b>
-            </Typography>
-            <Typography sx={{ color: '#FFF' }} variant="h5" fontFamily="sans-serif">
-              We make things faster and safer by going digital, saving you time and reducing risk.
-              Experience efficiency and peace of mind in every step of the process.
-            </Typography>
-            <Button
-              variant="outlined"
-              sx={{ borderColor: '#fff', color: '#fff', maxWidth: '125px' }}
-            >
-              Download
-            </Button>
-          </Stack>
+        <Box sx={{ width: '70%', alignContent: 'flex-end', pb: 4 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} lg={4}>
+              <Stack direction="column" spacing={0}>
+                <img
+                  src={logo}
+                  alt="logo"
+                  style={{
+                    width: 200,
+                    height: 200,
+                    zIndex: '999',
+                    paddingTop: '7px',
+                  }}
+                />
+                <Typography
+                  sx={{ color: '#FFF', top: '-55px' }}
+                  variant="h5"
+                  fontFamily="sans-serif"
+                >
+                  We make things faster and safer by going digital, saving you time and reducing
+                  risk. Experience efficiency and peace of mind in every step of the process.
+                </Typography>
+                <Button
+                  variant="outlined"
+                  sx={{ borderColor: '#fff', color: '#fff', maxWidth: '125px', mt: 3 }}
+                >
+                  Download
+                </Button>
+              </Stack>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
       <Box sx={{ width: '70%', alignSelf: 'center', pt: 8 }}>
-        <Stack direction="row">
-          <Stack direction="column" sx={{ width: '50%' }}>
-            <Typography fontFamily="sans-serif">How does it work?</Typography>
-            <Typography fontFamily="sans-serif" variant="h4">
-              <b> QR technology paired with AWS infrastructure.</b>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={6}>
+            <Stack direction="column">
+              <Typography fontFamily="sans-serif">How does it work?</Typography>
+              <Typography fontFamily="sans-serif" variant="h4">
+                <b> QR technology paired with AWS infrastructure.</b>
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Typography fontFamily="sans-serif">
+              Our goal is to enhance the safety of police stops for both officers and citizens by
+              implementing advanced training, technology, and community engagement to reduce risks
+              and foster trust.
             </Typography>
-          </Stack>
-          <Typography fontFamily="sans-serif" sx={{ width: '50%' }}>
-            Our goal is to enhance the safety of police stops for both officers and citizens by
-            implementing advanced training, technology, and community engagement to reduce risks and
-            foster trust.
-          </Typography>
-        </Stack>
+          </Grid>
+        </Grid>
+
         <Box sx={{ mt: 4 }}>
           <Grid container spacing={4}>
             {cardData.map((data) => (
-              <Grid item xs={4}>
+              <Grid item xs={12} lg={4}>
                 <Card
                   sx={{
                     minHeight: 300,
