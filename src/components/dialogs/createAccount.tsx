@@ -191,7 +191,7 @@ export default function CreateAccountDialog({ open, handleCancel, handleSubmit }
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
@@ -209,7 +209,7 @@ export default function CreateAccountDialog({ open, handleCancel, handleSubmit }
                       </IconButton>
                     </InputAdornment>
                   }
-                  label="Password"
+                  label="Password *"
                 />
               </FormControl>
             </Grid>

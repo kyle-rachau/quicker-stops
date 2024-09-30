@@ -187,7 +187,7 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
@@ -205,7 +205,7 @@ export default function LoginDialog({ open, handleCancel, handleSubmit }: LoginP
                       </IconButton>
                     </InputAdornment>
                   }
-                  label="Password"
+                  label="Password *"
                 />
               </FormControl>
             </Grid>
